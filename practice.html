@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 		<style type="text/css">
 			.card {
 				border: 1px solid blue;
@@ -13,5 +14,16 @@
 	</head>
 	<body>
 		<div class="card"> Hello world! </div>
+		<button> Next
+		</button>
+		<button> Start test </button>
+
+		<script type="text/javascript">
+			var dostuff = function() {
+				console.log("click");
+				$(".card").text("Bananens ost");
+			};
+			$(".card").on("click", dostuff);
+		</script>
 	</body>
 </html>
