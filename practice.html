@@ -9,6 +9,8 @@
 				height: 100px;
 				text-align: center;
 				padding-top: 50px;
+				background: blue;
+				-webkit-user-select: none;
 			}
 		</style>
 	</head>
@@ -21,12 +23,19 @@
 		<script type="text/javascript">
 			var theText = "Banana";
 			var theOtherText = "Banan";
+			var newbackground = "pink";
+			var background= "green";
 			var dostuff = function() {
 				console.log("click");
 				$(".card").text(theText);
 				var temp = theText;
 				theText = theOtherText;
 				theOtherText = temp;
+
+				$(".card").css("background",background);
+				temp = background;
+				background = newbackground
+				newbackground = temp;
 			};
 			$(".card").on("click", dostuff);
 		</script>
