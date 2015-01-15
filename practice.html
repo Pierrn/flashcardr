@@ -19,9 +19,14 @@
 		<button> Start test </button>
 
 		<script type="text/javascript">
+			var theText = "Banana";
+			var theOtherText = "Banan";
 			var dostuff = function() {
 				console.log("click");
-				$(".card").text("Bananens ost");
+				$(".card").text(theText);
+				var temp = theText;
+				theText = theOtherText;
+				theOtherText = temp;
 			};
 			$(".card").on("click", dostuff);
 		</script>
