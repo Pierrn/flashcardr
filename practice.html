@@ -21,38 +21,45 @@
     <button> Start test </button>
 
     <script type="text/javascript">
+    //Våra arrayer/"kort".
     var fronts = ["Cheese", "Banana","Apple"];
     var backs = ["Ost","Banan","Äpple"];
+    //Vilket "kort"(array) vi är på.
     var currIdx = 0;
     var currSide = "front";
 
+    //Denna funktion ändrar framsidan på korten. Array & färg.
     var showFront = function(idx) {
       $(".card").text(fronts[idx]);
       $(".card").css("background",'pink');
       currSide = "front";
     };
+    //Denna funktion ändrar baksidan på korten. Array & färg.
     var showBack = function(idx) {
       $(".card").text(backs[idx]);
       $(".card").css("background",'green');
       currSide = "back";
     };
+    //Denna funktion gör att när vi har gått igenom alla arrayer så börjas det om.
     var nextCard = function() {
-      // Make sure currIdx never exceeds the size of the fronts array
+      // Låt aldrig currIdx överstiga antalet arrayer i frontsen
       currIdx=(currIdx+1)%fronts.length;
       showFront(currIdx);
     };
     var flipCard = function(){
+      //Vilken sida som ska visas. Om Framsida visas, ska det bytas till baksidan & visa versa.
       if (currSide=="front"){
         showBack(currIdx);
       } else {
         showFront(currIdx);
       }
     };
-
+    //Anropar nextCard-funktionen när "Next-knappen" trycks.
     $(".next").on("click", nextCard);
+    //Anropar flipCard-funktionen när kortet trycks.
     $(".card").on("click",flipCard);
 
-    showFront(0);
+   showFront(0);
     </script>
   </body>
 </html>
