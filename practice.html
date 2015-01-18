@@ -1,43 +1,58 @@
-<html>
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-		<style type="text/css">
-			.card {
-				border: 1px solid blue;
-				margin:100px auto 0px auto;
-				width: 300px;
-				height: 100px;
-				text-align: center;
-				padding-top: 50px;
-				background: blue;
-				-webkit-user-select: none;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="card"> Hello world! </div>
-		<button> Next
-		</button>
-		<button> Start test </button>
+﻿<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style type="text/css">
+      .card {
+        border: 1px solid blue;
+        margin:100px auto 0px auto;
+        width: 300px;
+        height: 100px;
+        text-align: center;
+        padding-top: 50px;
+        background: blue;
+        -webkit-user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card"> Hello world! </div>
+    <button class="next"> Next
+    </button>
+    <button> Start test </button>
 
-		<script type="text/javascript">
-			var theText = "Banana";
-			var theOtherText = "Banan";
-			var newbackground = "pink";
-			var background= "green";
-			var dostuff = function() {
-				console.log("click");
-				$(".card").text(theText);
-				var temp = theText;
-				theText = theOtherText;
-				theOtherText = temp;
+    <script type="text/javascript">
+    var fronts = ["Cheese", "Banana","Apple"];
+    var backs = ["Ost","Banan","Äpple"];
+    var currIdx = 0;
+    var currSide = "front";
 
-				$(".card").css("background",background);
-				temp = background;
-				background = newbackground
-				newbackground = temp;
-			};
-			$(".card").on("click", dostuff);
-		</script>
-	</body>
+    var showFront = function(idx) {
+      $(".card").text(fronts[idx]);
+      $(".card").css("background",'pink');
+      currSide = "front";
+    };
+    var showBack = function(idx) {
+      $(".card").text(backs[idx]);
+      $(".card").css("background",'green');
+      currSide = "back";
+    };
+    var nextCard = function() {
+      // Make sure currIdx never exceeds the size of the fronts array
+      currIdx=(currIdx+1)%fronts.length;
+      showFront(currIdx);
+    };
+    var flipCard = function(){
+      if (currSide=="front"){
+        showBack(currIdx);
+      } else {
+        showFront(currIdx);
+      }
+    };
+
+    $(".next").on("click", nextCard);
+    $(".card").on("click",flipCard);
+
+    showFront(0);
+    </script>
+  </body>
 </html>
