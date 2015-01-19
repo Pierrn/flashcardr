@@ -26,6 +26,7 @@
     //Våra arrayer/"kort".
     var fronts = ["Cheese", "Banana","Apple"];
     var backs = ["Ost","Banan","Äpple"];
+    //Vår svar-ruta
     var svar = [];
     //Vilket "kort"(array) vi är på.
     var currIdx = 0;
@@ -59,16 +60,23 @@
       }
     };
     var startTest = function(){
+      //Visa svars-rutan när denna funktion körs.
       $(".answer").show();
+      //>Göm test-knappen.
       $(".test").hide();
+      //Det ska ej gå att kolla på baksidan med svaren på.
       $(".card").off("click",flipCard);
+      //stänger av next knappen.
       $(".next").off("click",nextCard);
       currIdx = 0;
       showFront(0);
+      //Startar 'saveandclear-knappen' istället
       $(".next").on("click",saveAndClear);
     }
     var saveAndClear = function(){
+      //Låter användaren mata in ett värde
       svar[currIdx] = $(".answer").val();
+      // Fyller värdet till vår array 'svar'
       $(".answer").val("");
       nextCard();
     }
@@ -76,6 +84,7 @@
     $(".next").on("click", nextCard);
     //Anropar flipCard-funktionen när kortet trycks.
     $(".card").on("click",flipCard);
+    //Anropar startTest-funktionen när 'Start-knappen' trycks.
     $(".test").on("click",startTest);
    showFront(0);
     $(".answer").hide();
