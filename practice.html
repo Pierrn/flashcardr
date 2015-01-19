@@ -18,12 +18,15 @@
     <div class="card"> Hello world! </div>
     <button class="next"> Next
     </button>
-    <button> Start test </button>
+    <button class= "test"> Start test </button>
+    <input class= "answer">
+  </input>
 
     <script type="text/javascript">
     //Våra arrayer/"kort".
     var fronts = ["Cheese", "Banana","Apple"];
     var backs = ["Ost","Banan","Äpple"];
+    var svar = [];
     //Vilket "kort"(array) vi är på.
     var currIdx = 0;
     var currSide = "front";
@@ -39,6 +42,7 @@
       $(".card").text(backs[idx]);
       $(".card").css("background",'green');
       currSide = "back";
+      
     };
     //Denna funktion gör att när vi har gått igenom alla arrayer så börjas det om.
     var nextCard = function() {
@@ -54,12 +58,27 @@
         showFront(currIdx);
       }
     };
+    var startTest = function(){
+      $(".answer").show();
+      $(".test").hide();
+      $(".card").off("click",flipCard);
+      $(".next").off("click",nextCard);
+      currIdx = 0;
+      showFront(0);
+      $(".next").on("click",saveAndClear);
+    }
+    var saveAndClear = function(){
+      svar[currIdx] = $(".answer").val();
+      $(".answer").val("");
+      nextCard();
+    }
     //Anropar nextCard-funktionen när "Next-knappen" trycks.
     $(".next").on("click", nextCard);
     //Anropar flipCard-funktionen när kortet trycks.
     $(".card").on("click",flipCard);
-
+    $(".test").on("click",startTest);
    showFront(0);
+    $(".answer").hide();
     </script>
   </body>
 </html>
