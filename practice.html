@@ -15,12 +15,17 @@
     </style>
   </head>
   <body>
+    <div class="resultBoard"> <h1> Results </h1> 
+      <div class="score"> </div>
+      <div class="resultList"> Result List </div>
+    </div>
     <div class="card"> Hello world! </div>
     <button class="next"> Next
     </button>
     <button class= "test"> Start test </button>
     <input class= "answer">
   </input>
+  <button class= "testAgain"> Start test again </button>
 
     <script type="text/javascript">
     //Våra arrayer/"kort".
@@ -31,7 +36,8 @@
     //Vilket "kort"(array) vi är på.
     var currIdx = 0;
     var currSide = "front";
-
+    $(".testAgain").hide();
+    $(".resultBoard").hide();
     //Denna funktion ändrar framsidan på korten. Array & färg.
     var showFront = function(idx) {
       $(".card").text(fronts[idx]);
@@ -73,12 +79,36 @@
       //Startar 'saveandclear-knappen' istället
       $(".next").on("click",saveAndClear);
     }
+    var result = function(){
+      $(".next").hide();
+      $(".testAgain").show();
+      $(".card").hide();
+      $(".answer").hide();
+      $(".resultBoard").show();
+      $(".score").show();
+      var score = 0;
+      for(var i=0; i<fronts.length; i++){
+        if(svar[i]==backs[i]){
+          score++;
+        }
+      }
+      var resultatet=score+"/"+fronts.length;
+      $(".score").text(resultatet);
+
+    };
     var saveAndClear = function(){
       //Låter användaren mata in ett värde
       svar[currIdx] = $(".answer").val();
       // Fyller värdet till vår array 'svar'
       $(".answer").val("");
-      nextCard();
+      //När testet är  på sista 'kortet', så går det vidare till resultatsidan.
+      console.log(currIdx);
+      if (currIdx==2) {
+        result();
+      } // Annars fortsätter vi till nästa 'kort'
+      else {
+        nextCard();
+      }
     }
     //Anropar nextCard-funktionen när "Next-knappen" trycks.
     $(".next").on("click", nextCard);
