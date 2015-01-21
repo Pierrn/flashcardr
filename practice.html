@@ -17,8 +17,10 @@
   <body>
     <div class="resultBoard"> <h1> Results </h1> 
       <div class="score"> </div>
-      <div class="resultList"> Result List </div>
+      <table class="resultList" border="1">
+      </table>
     </div>
+    <button class="review"> Review </button>
     <div class="card"> Hello world! </div>
     <button class="next"> Next
     </button>
@@ -36,8 +38,6 @@
     //Vilket "kort"(array) vi är på.
     var currIdx = 0;
     var currSide = "front";
-    $(".testAgain").hide();
-    $(".resultBoard").hide();
     //Denna funktion ändrar framsidan på korten. Array & färg.
     var showFront = function(idx) {
       $(".card").text(fronts[idx]);
@@ -86,16 +86,31 @@
       $(".answer").hide();
       $(".resultBoard").show();
       $(".score").show();
+      $("myTable").show();
+      $(".review").show();
       var score = 0;
       for(var i=0; i<fronts.length; i++){
-        if(svar[i]==backs[i]){
+        if(svar[i].toLowerCase()==backs[i].toLowerCase()){
           score++;
         }
       }
+
       var resultatet=score+"/"+fronts.length;
       $(".score").text(resultatet);
+      $(".review").on("click",resultatet);
 
-    };
+      var resultatet = function(){
+        for(var i=0; i<fronts.length; i++){
+          $(".resultList").append(
+            "<tr>"+
+              "<td>"+fronts[i]+"</td>"+
+              "<td>"+backs[i]+"</td>"+
+              "<td>"+svar[i]+"</td>"+
+            "</tr>"
+          );
+        }
+      }
+    }
     var saveAndClear = function(){
       //Låter användaren mata in ett värde
       svar[currIdx] = $(".answer").val();
@@ -116,8 +131,12 @@
     $(".card").on("click",flipCard);
     //Anropar startTest-funktionen när 'Start-knappen' trycks.
     $(".test").on("click",startTest);
-   showFront(0);
+    showFront(0);
     $(".answer").hide();
+    $(".testAgain").hide();
+    $(".resultBoard").hide();
+    $(".review").hide();
+    $("resultList").hide();
     </script>
   </body>
 </html>
