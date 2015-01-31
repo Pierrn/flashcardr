@@ -97,6 +97,10 @@
 
       var resultatet="Correct answers "+score+"/"+fronts.length;
       $(".score").text(resultatet);
+      var onTestAgain = function(){
+        window.location.reload();
+      };
+      $(".testAgain").on("click",onTestAgain);
 
       var rListan = function(){
         for(var i=0; i<fronts.length; i++){
@@ -143,7 +147,7 @@
     $(".testAgain").hide();
     $(".resultBoard").hide();
     $(".review").hide();
-    $("resultList").hide();
+    $(".resultList").hide();
     </script>
   </body>
 </html>
