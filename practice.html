@@ -78,6 +78,13 @@
       showFront(0);
       //Startar 'saveandclear-knappen' istället
       $(".next").on("click",saveAndClear);
+      $(".answer").focus();
+      var onkeypress= function(event){
+        if(event.charCode==13){
+          saveAndClear();
+        }
+      };
+      $(".answer").keypress(onkeypress);
     }
     var result = function(){
       $(".next").hide();
@@ -119,6 +126,7 @@
             "</tr>"
           );
         }
+        $(".resultList").show();
       }
       $(".review").on("click", rListan);
     }
@@ -135,6 +143,7 @@
       else {
         nextCard();
       }
+      $(".answer").focus();
     }
     //Anropar nextCard-funktionen när "Next-knappen" trycks.
     $(".next").on("click", nextCard);
