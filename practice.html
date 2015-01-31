@@ -95,21 +95,28 @@
         }
       }
 
-      var resultatet=score+"/"+fronts.length;
+      var resultatet="Correct answers "+score+"/"+fronts.length;
       $(".score").text(resultatet);
-      $(".review").on("click",resultatet);
 
-      var resultatet = function(){
+      var rListan = function(){
         for(var i=0; i<fronts.length; i++){
+          var rightWrong; 
+          if(svar[i].toLowerCase()==backs[i].toLowerCase()){
+            rightWrong="&check;";
+          } else {
+            rightWrong="&cross;";
+          }
           $(".resultList").append(
             "<tr>"+
               "<td>"+fronts[i]+"</td>"+
               "<td>"+backs[i]+"</td>"+
               "<td>"+svar[i]+"</td>"+
+              "<td>"+rightWrong+"</td>"+
             "</tr>"
           );
         }
       }
+      $(".review").on("click", rListan);
     }
     var saveAndClear = function(){
       //Låter användaren mata in ett värde
