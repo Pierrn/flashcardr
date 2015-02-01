@@ -18,7 +18,7 @@
         padding:50px;
       }
       .resultList {
-        margin-top: 20px;
+        margin-top: 20px; 
       }
       .card {
         margin:100px auto 0px auto;
@@ -35,6 +35,14 @@
         font-size: 34pt;
         color: rgba(39, 39, 39, 0.7);
       }
+      .buttons {
+        margin-top: 30px; 
+        float: right;
+      }
+      .card-and-buttons {
+        width: 400px;
+        margin: auto;
+      }
     </style>
   </head>
   <body>
@@ -43,19 +51,21 @@
       <table class="resultList" style="display: table;">
       </table>
     </div>
-    <button class="review"> Review </button>
-    <div class="card"> Hello world! </div>
-    <button class="next"> Next
-    </button>
-    <button class= "test"> Start test </button>
-    <input class= "answer">
-  </input>
-  <button class= "testAgain"> Start test again </button>
-
+    <div class="card-and-buttons">
+      <div class="card"> Hello world! </div>
+      <div class = "buttons">
+        <button class="next"> Next
+        </button>
+        <button class= "test"> Start test </button>
+        <input class= "answer">
+        </input>
+        <button class= "testAgain"> Start test again </button>
+      </div>
+    </div>
     <script type="text/javascript">
     //Våra arrayer/"kort".
-    var fronts = ["Cheese", "Banana","Apple"];
-    var backs = ["Ost","Banan","Äpple"];
+    var fronts = ["Cheese", "Banana","Apple","Hello"];
+    var backs = ["Ost","Banan","Äpple","Hej"];
     //Vår svar-ruta
     var svar = [];
     //Vilket "kort"(array) vi är på.
@@ -161,7 +171,7 @@
         }
         $(".resultList").show();
       }
-      $(".review").on("click", rListan);
+      rListan();
     }
     var saveAndClear = function(){
       //Låter användaren mata in ett värde
@@ -170,7 +180,7 @@
       $(".answer").val("");
       //När testet är  på sista 'kortet', så går det vidare till resultatsidan.
       console.log(currIdx);
-      if (currIdx==2) {
+      if (currIdx==3) {
         result();
       } // Annars fortsätter vi till nästa 'kort'
       else {
@@ -188,8 +198,6 @@
     $(".answer").hide();
     $(".testAgain").hide();
     $(".resultBoard").hide();
-    $(".review").hide();
-    $(".resultList").hide();
     </script>
   </body>
 </html>
