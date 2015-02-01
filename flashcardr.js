@@ -1,6 +1,11 @@
 // Våra glosor.
-var fronts = ["Cheese", "Banana","Apple","Hello"];
-var backs = ["Ost","Banan","Äpple","Hej"];
+var capitals = ["Amsterdam", "Andorra la Vella", "Ankara", "Aten", "Baku", "Belgrad", "Berlin", "Bern", "Bratislava", "Bryssel", "Budapest", "Bukarest", "Chişinău", "Dublin", "Helsingfors", "Jerevan", "Kiev", "Köpenhamn", "Lissabon", "Ljubljana", "London", "Luxemburg", "Madrid", "Minsk", "Monaco", "Moskva", "Nicosia", "Oslo", "Paris", "Podgorica", "Prag", "Pristina", "Reykjavik", "Riga", "Rom", "San Marino", "Sarajevo", "Skopje", "Sofia", "Stockholm", "Tallinn", "Tbilisi", "Tirana", "Vaduz", "Valletta", "Vatikanstaden", "Vilnius", "Warszawa", "Wien", "Zagreb"];
+var countries = ["Nederländerna", "Andorra", "Turkiet", "Grekland", "Azerbajdzjan", "Serbien", "Tyskland", "Schweiz", "Slovakien", "Belgien", "Ungern", "Rumänien", "Moldavien", "Irland", "Finland", "Armenien", "Ukraina", "Danmark", "Portugal", "Slovenien", "Storbritannien", "Luxemburg", "Spanien", "Vitryssland", "Monaco", "Ryssland", "Cypern", "Norge", "Frankrike", "Montenegro", "Tjeckien", "Kosovo", "Island", "Lettland", "Italien", "San Marino", "Bosnien och Hercegovina", "Makedonien", "Bulgarien", "Sverige", "Estland", "Georgien", "Albanien", "Liechtenstein", "Malta", "Vatikanstaten", "Litauen", "Polen", "Österrike", "Kroatien"];
+
+// Hit stoppar vi glosorna efter vi valt hur många
+var fronts = [];
+var backs = [];
+
 // I denna array sparas svaren som man matar in.
 var svar = [];
 // Vilket index i arrayen med glosord vi är på.
@@ -172,6 +177,16 @@ var saveAndClear = function() {
   $(".answer").focus();
 }
 
+/**
+ * Kollar om n är ett nummer.
+ * Från http://stackoverflow.com/questions/1303646/check-whether-variable-is-number-or-string-in-javascript
+ * @param n nånting som vi vill veta om det är ett nummer
+ * @returns true om det är ett nummer, annars false
+ */
+var isNumber = function(n) {
+  return !isNaN(parseFloat(n));
+}
+
 // HÄR BÖRJAR PROGRAMMET
 
 // Anropar nextCard-funktionen när "Next-knappen" trycks.
@@ -184,6 +199,23 @@ $(".test").on("click", startTest);
 $(".answer").hide();
 $(".testAgain").hide();
 $(".resultBoard").hide();
+
+// Fråga hur många länder som ska testas. 
+var count = prompt("How many cards?");
+
+// Om count är mindre än 3 eller om det inte är en bokstav.
+if (count < 3 || !isNumber(count)) {
+  alert("Input must be a number greater than 3");
+  window.location.reload();
+}
+
+// Slumpa ut count antal kort
+for (var i = 0; i < count; i++) {
+  // Slumpmässigt index från 0 till så många länder vi har
+  var idx = Math.floor(Math.random() * countries.length);
+  fronts.push(countries[idx]);
+  backs.push(capitals[idx]);
+}
 
 // Visar första kortet. Let the games begin!
 showCard(0);
