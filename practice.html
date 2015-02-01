@@ -22,8 +22,6 @@
       }
       .card {
         margin:100px auto 0px auto;
-        width: 400px;
-        height: 185px;
         box-shadow: 1px 9px 18px rgba(0,0,0,0.5);
         text-align: center;
         padding-top: 50px;
@@ -43,6 +41,56 @@
         width: 400px;
         margin: auto;
       }
+      .flipper-container .front {
+        background-image: url('frontcard.jpg');
+      }
+      .flipper-container .back {
+        background-image: url('backcard.jpg');
+      }
+
+      /* entire container, keeps perspective */
+      .flip-container {
+        perspective: 1000;
+        margin-bottom: 150px;
+      }
+        /* flip the pane when hovered */
+        .flip-container:hover .flipper, .flip-container.hover .flipper {
+          transform: rotateY(180deg);
+        }
+
+      .flip-container, .front, .back {
+        width: 400px;
+        height: 185px;
+      }
+
+      /* flip speed goes here */
+      .flipper {
+        transition: 0.6s;
+        transform-style: preserve-3d;
+
+        position: relative;
+      }
+
+      /* hide back of pane during swap */
+      .front, .back {
+        backface-visibility: hidden;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      /* front pane, placed above back */
+      .front {
+        z-index: 2;
+        /* for firefox 31 */
+        transform: rotateY(0deg);
+      }
+
+      /* back, initially hidden pane */
+      .back {
+        transform: rotateY(180deg);
+      }
     </style>
   </head>
   <body>
@@ -52,7 +100,16 @@
       </table>
     </div>
     <div class="card-and-buttons">
-      <div class="card"> Hello world! </div>
+      <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+        <div class="flipper">
+          <div class="front card">
+            framsida
+          </div>
+          <div class="back card">
+            baksida
+          </div>
+        </div>
+      </div>
       <div class = "buttons">
         <button class="next"> Next
         </button>
@@ -70,33 +127,15 @@
     var svar = [];
     //Vilket "kort"(array) vi är på.
     var currIdx = 0;
-    var currSide = "front";
-    //Denna funktion ändrar framsidan på korten. Array & färg.
-    var showFront = function(idx) {
-      $(".card").text(fronts[idx]);
-      $(".card").css("background-image","url('frontcard.jpg')");
-      currSide = "front";
-    };
-    //Denna funktion ändrar baksidan på korten. Array & färg.
-    var showBack = function(idx) {
-      $(".card").text(backs[idx]);
-      $(".card").css("background-image","url('backcard.jpg')");
-      currSide = "back";
-      
+    var showCard =function(idx){
+      $(".front").text(fronts[idx]);
+      $(".back").text(backs[idx]);
     };
     //Denna funktion gör att när vi har gått igenom alla arrayer så börjas det om.
     var nextCard = function() {
       // Låt aldrig currIdx överstiga antalet arrayer i frontsen
       currIdx=(currIdx+1)%fronts.length;
-      showFront(currIdx);
-    };
-    var flipCard = function(){
-      //Vilken sida som ska visas. Om Framsida visas, ska det bytas till baksidan & visa versa.
-      if (currSide=="front"){
-        showBack(currIdx);
-      } else {
-        showFront(currIdx);
-      }
+      showCard(currIdx);
     };
     var startTest = function(){
       //Visa svars-rutan när denna funktion körs.
@@ -104,11 +143,11 @@
       //>Göm test-knappen.
       $(".test").hide();
       //Det ska ej gå att kolla på baksidan med svaren på.
-      $(".card").off("click",flipCard);
+      $(".flipper").removeClass("flipper");
       //stänger av next knappen.
       $(".next").off("click",nextCard);
       currIdx = 0;
-      showFront(0);
+      showCard(0);
       //Startar 'saveandclear-knappen' istället
       $(".next").on("click",saveAndClear);
       $(".answer").focus();
@@ -122,11 +161,10 @@
     var result = function(){
       $(".next").hide();
       $(".testAgain").show();
-      $(".card").hide();
+      $(".flip-container").hide();
       $(".answer").hide();
       $(".resultBoard").show();
       $(".score").show();
-      $("myTable").show();
       $(".review").show();
       var score = 0;
       for(var i=0; i<fronts.length; i++){
@@ -190,11 +228,9 @@
     }
     //Anropar nextCard-funktionen när "Next-knappen" trycks.
     $(".next").on("click", nextCard);
-    //Anropar flipCard-funktionen när kortet trycks.
-    $(".card").on("click",flipCard);
     //Anropar startTest-funktionen när 'Start-knappen' trycks.
     $(".test").on("click",startTest);
-    showFront(0);
+    showCard(0);
     $(".answer").hide();
     $(".testAgain").hide();
     $(".resultBoard").hide();
